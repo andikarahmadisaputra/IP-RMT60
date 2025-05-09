@@ -22,7 +22,7 @@ module.exports = class CategoryController {
     }
   }
 
-  static async getCategories(req, res) {
+  static async getCategories(req, res, next) {
     try {
       const categories = await Category.findAll({
         attributes: ["id", "name"],
@@ -35,7 +35,7 @@ module.exports = class CategoryController {
     }
   }
 
-  static async updateCategoryById(req, res) {
+  static async updateCategoryById(req, res, next) {
     try {
       if (!req.params.id || isNaN(req.params.id)) {
         throw { name: "BadRequest", message: "id is not valid" };
