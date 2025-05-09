@@ -1,3 +1,5 @@
+const CategoryController = require("../controllers/CategoryController");
+
 const router = require("express").Router();
 // const UserController = require("../controllers/UserController");
 // const ProductController = require("../controllers/ProductController");
@@ -13,5 +15,8 @@ const router = require("express").Router();
 // router.post("/products/:id", ProductController.createProduct);
 // router.put("/products/:id", ProductController.updateProductById);
 // router.delete("/products/:id", ProductController.deleteProductById);
+
+router.post("/categories", CategoryController.createCategory);
+router.put("/categories/:id", CategoryController.updateCategoryById);
 
 module.exports = router;
