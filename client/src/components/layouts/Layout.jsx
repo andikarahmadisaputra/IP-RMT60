@@ -1,9 +1,16 @@
 import { Outlet } from "react-router";
 import Navbar from "../base/Navbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchCategories } from "../../features/categories/categorySlice";
 
 export default function Layout() {
-  const categories = useSelector((state) => state.products.list.data);
+  const categories = useSelector((state) => state.categories.list);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, []);
   return (
     <>
       <Navbar categories={categories} />

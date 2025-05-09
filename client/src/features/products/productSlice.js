@@ -13,8 +13,32 @@ export const productSlice = createSlice({
       dataPerPage: 0,
     },
     detail: {},
+    filter: {
+      categories: null,
+      q: "",
+      page: {
+        number: 1,
+        size: 20,
+      },
+      sort: {
+        by: "name",
+        order: "ASC",
+      },
+    },
   },
-  reducers: {},
+  reducers: {
+    setCategoryFilter: (state, action) => {
+      console.log(action.payload, "ap set category");
+      state.filter.categories = action.payload;
+    },
+    setSearchFilter: (state, action) => {
+      console.log(action.payload, "ap set search");
+      state.filter.q = action.payload;
+    },
+    resetFilters: (state) => {
+      state.filter.categories = "";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       console.log(action.payload, "<< ap");
@@ -44,7 +68,8 @@ export const productSlice = createSlice({
   },
 });
 
-export const { setProducts, setProduct } = productSlice.actions;
+export const { setCategoryFilter, setSearchFilter, resetFilters } =
+  productSlice.actions;
 
 export const fetchProducts = createAsyncThunk(
   "product/fetchProducts",
@@ -66,6 +91,7 @@ export const fetchProducts = createAsyncThunk(
     if (page?.number) params.append("page[number]", page.number);
     if (page?.size) params.append("page[size]", page.size);
 
+    console.log(params);
     const { data } = await axios.get(`${serverUrl}/products?${params}`);
     return data;
   }

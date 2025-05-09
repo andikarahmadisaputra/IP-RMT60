@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router";
 import DetailProductPage from "./pages/DetailProductPage";
-import HomePage from "./pages/Homepage";
+import HomePage from "./pages/HomePage";
 import Layout from "./components/layouts/Layout";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";

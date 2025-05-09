@@ -5,11 +5,20 @@ import ProductCard from "../components/base/ProductCard.jsx";
 
 export default function HomePage() {
   const products = useSelector((state) => state.products.list.data);
+  const category = useSelector((state) => state.products.filter.categories);
+  const search = useSelector((state) => state.products.filter.q);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+    dispatch(
+      fetchProducts({
+        filter: {
+          categories: category,
+        },
+        q: search,
+      })
+    );
+  }, [category, search]);
 
   return (
     <div className="container py-5">

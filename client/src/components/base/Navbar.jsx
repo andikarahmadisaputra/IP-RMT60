@@ -1,8 +1,26 @@
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router";
+import {
+  resetFilters,
+  setCategoryFilter,
+  setSearchFilter,
+} from "../../features/products/productSlice";
+import { useState } from "react";
 
 export default function Navbar({ categories }) {
   const access_token = localStorage.getItem("access_token");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+
+  const handleCategoryClick = (categoryId) => {
+    dispatch(setCategoryFilter(categoryId));
+  };
+
+  const handleSearch = () => {
+    dispatch(setSearchFilter(search));
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
       <div className="container">
@@ -29,11 +47,21 @@ export default function Navbar({ categories }) {
                 Categories
               </a>
               <ul className="dropdown-menu">
+                <li>
+                  <Link
+                    className="dropdown-item"
+                    to={"/"}
+                    onClick={() => dispatch(resetFilters())}
+                  >
+                    All
+                  </Link>
+                </li>
                 {categories.map((el) => (
                   <li key={el.id}>
                     <Link
                       className="dropdown-item"
-                      to={`/?filter[categories]=${el.id}`}
+                      to={"/"}
+                      onClick={() => handleCategoryClick(el.id)}
                     >
                       {el.name}
                     </Link>
@@ -61,16 +89,21 @@ export default function Navbar({ categories }) {
               </>
             )}
           </ul>
-          <form className="d-flex me-3">
+          <div className="d-flex me-3">
             <input
               className="form-control me-2"
-              type="search"
+              type="text"
               placeholder="Search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
-            <button className="btn btn-outline-secondary" type="submit">
+            <button
+              className="btn btn-outline-secondary"
+              onClick={() => handleSearch()}
+            >
               Search
             </button>
-          </form>
+          </div>
           <div className="dropdown">
             <button className="btn btn-outline-dark" data-bs-toggle="dropdown">
               <i className="bi bi-person"></i>

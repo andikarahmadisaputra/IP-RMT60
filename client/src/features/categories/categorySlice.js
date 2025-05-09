@@ -5,7 +5,7 @@ const serverUrl = import.meta.env.VITE_API_BASE_URL;
 export const categorySlice = createSlice({
   name: "category",
   initialState: {
-    list: {},
+    list: [],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -27,7 +27,7 @@ export const { setCategories } = categorySlice.actions;
 export const fetchCategories = createAsyncThunk(
   "category/fetchCategories",
   async () => {
-    const { data } = await axios.get(`${serverUrl}/categories}`);
+    const { data } = await axios.get(`${serverUrl}/categories`);
     return data;
   }
 );
