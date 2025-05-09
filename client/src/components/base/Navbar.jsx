@@ -9,6 +9,8 @@ import { useState } from "react";
 
 export default function Navbar({ categories }) {
   const access_token = localStorage.getItem("access_token");
+  const auth = JSON.parse(localStorage.getItem("auth"));
+  console.log(auth, "<<< auth");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
@@ -76,11 +78,18 @@ export default function Navbar({ categories }) {
                     Chat With AI
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/admin/products"}>
-                    Management Product
-                  </Link>
-                </li>
+                {auth &&
+                  auth.roles?.some((role) =>
+                    ["seller", "admin"].includes(role)
+                  ) && (
+                    <>
+                      <li className="nav-item">
+                        <Link className="nav-link" to={"/admin/products"}>
+                          Management Product
+                        </Link>
+                      </li>
+                    </>
+                  )}
                 <li className="nav-item">
                   <Link className="nav-link" to={"/shipping"}>
                     Shipping

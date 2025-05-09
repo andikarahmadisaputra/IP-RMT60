@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import { jwtDecode } from "jwt-decode";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -33,6 +34,19 @@ const LoginPage = () => {
       });
       console.log(data, "<<< data");
       localStorage.setItem("access_token", data.data.access_token);
+
+      const access_token = localStorage.getItem("access_token");
+      if (access_token) {
+        const decoded = jwtDecode(access_token);
+        console.log(decoded, "<<< decoded");
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            roles: decoded.roles,
+          })
+        );
+      }
+
       navigate("/");
     } catch (error) {
       Swal.fire({
