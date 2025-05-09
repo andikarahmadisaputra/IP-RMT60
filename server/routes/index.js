@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const cors = require("cors");
 const routerSeller = require("./seller");
 const routerAdmin = require("./admin");
 const PublicController = require("../controllers/PublicController");
@@ -6,6 +7,8 @@ const authentication = require("../middleware/authentication");
 const { guardAdmin, guardSeller } = require("../middleware/authorization");
 const ProductController = require("../controllers/ProductController");
 const CategoryController = require("../controllers/CategoryController");
+
+router.use(cors());
 
 // Auth
 router.post("/register", PublicController.register);

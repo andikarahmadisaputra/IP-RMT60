@@ -1,7 +1,7 @@
-const express = require("express");
 const SellerController = require("../controllers/SellerController");
-
-const router = express.Router();
+const router = require("express").Router();
+const cors = require("cors");
+router.use(cors());
 
 router.get("/products", SellerController.getProducts);
 router.get("/products/:id", SellerController.getProductById);
