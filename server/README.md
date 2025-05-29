@@ -1,4 +1,4 @@
-# Paligada API Documentation
+# Palugada API Documentation
 
 ## Endpoints
 
